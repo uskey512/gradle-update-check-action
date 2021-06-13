@@ -18,6 +18,7 @@ interface Option {
     readonly buildGradleFiles: string[] | null;
     readonly skipPluginDependency: boolean;
     readonly revision: "release" | "milestone" | "integration";
+    readonly releaseChannel: "current" | "release-candidate" | "nightly";
     readonly outputTextStyle: "short" | "long";
 }
 
@@ -40,12 +41,22 @@ function getOption(): Option {
     } else {
         revision = "release";
     }
+    const releaseChannelValue = core.getInput("release_channel");
+    let releaseChannel: "current" | "release-candidate" | "nightly";
+    if (releaseChannelValue == "current") {
+        releaseChannel = "current";
+    } else if (releaseChannelValue == "nightly") {
+        releaseChannel = "nightly";
+    } else {
+        releaseChannel = "release-candidate";
+    }
     const outputTextStyle = core.getInput("output_text_style");
 
     return {
         buildGradleFiles: buildGradleFiles,
         skipPluginDependency: skipPluginDependency,
         revision: revision,
+        releaseChannel: releaseChannel,
         outputTextStyle: outputTextStyle == "long" ? "long" : "short",
     };
 }
@@ -75,6 +86,7 @@ async function executeOutdated(buildGradleFile: string, option: Option): Promise
         await exec.exec(gradleCommand, [
             "dependencyUpdates",
             `-Drevision=${option.revision}`,
+            `-DgradleReleaseChannel=${option.releaseChannel}`,
             "-DoutputFormatter=json",
         ]);
 

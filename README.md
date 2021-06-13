@@ -58,6 +58,10 @@ You can also pin to a [specific release](https://github.com/MeilCli/gradle-updat
   - version check revision
   - more information? see [ben-manes/gradle-versions-plugin](https://github.com/ben-manes/gradle-versions-plugin)
   - value: `release` or `milestone` or `integration`, default: `release`
+- `release_channel`
+  - optional
+  - which release channel of the Gradle project
+  - value: `current` or `release-candidate` or `nightly`, default: `release-candidate`
 - `output_text_style`
   - optional
   - output text style
