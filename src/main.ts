@@ -10,7 +10,7 @@ import { ExecOptions } from "@actions/exec/lib/interfaces";
 
 const buildGradleDependency = `buildscript {
     repositories { jcenter() }
-    dependencies { classpath "com.github.ben-manes:gradle-versions-plugin:0.25.0" }
+    dependencies { classpath "com.github.ben-manes:gradle-versions-plugin:0.39.0" }
 }
 apply plugin: "com.github.ben-manes.versions"`;
 
